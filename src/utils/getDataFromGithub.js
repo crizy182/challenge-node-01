@@ -1,5 +1,9 @@
 const puppeteer = require('puppeteer');
 const getTime = require('./getTime');
+const getPhoto = require('./getPhoto');
+const getCount = require('./getCount');
+const postToSlack = require('./postToSlack');
+
 
 const githubUrl = 'https://github.com/';
 
@@ -9,14 +13,13 @@ const getDataFromGithub = async (githubUser) => {
   const page = await browser.newPage();
   const unixTime = getTime();
   console.log(unixTime);
-  await page.goto(`${githubUrl}${githubUser}`);
+  await page.goto(`${githubUrl}${githubUser}?tab=repositories`);
   await page.screenshot({ path: `${__dirname}/images/${githubUser}.png` });
-  //const githubCounter = await page.evaluate(() => document.getElementsByClassName('Counter')[0].innerText);
-  // await page.screenshot({ path: `${__dirname}/images/${getTime()}-${githubUser}.png` });
+  await page.screenshot({ path: `${__dirname}/images/${getTime()}-${githubUser}.png` });
 
-  const githubUserPhoton = await page.evaluate(
-    () => document.getElementsByClassName('avatar-before-user-status')[0],
-  );
+  const reposCount = await getCount(page);
+  const avatar = await getPhoto(page);
+  await postToSlack(githubUser, avatar, reposCount);
   await browser.close();
   // //console.log(githubCounter);
   return true;

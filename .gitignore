@@ -1,3 +1,6 @@
+# outputs
+src/utils/images
+
 # Logs
 logs
 *.log
