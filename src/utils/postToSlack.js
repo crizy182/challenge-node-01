@@ -18,6 +18,7 @@ const postToSlack = async (user, photo, count) => {
       },
     ],
   });
+  console.log(data);
   // await fetch(webhookURL, {
   //   method: 'POST',
   //   headers: {
