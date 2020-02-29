@@ -7,10 +7,11 @@ const getDataFromGithub = async (githubUser) => {
   // console.log('Launch Puppeteer');
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-
+  const unixTime = getTime();
+  console.log(unixTime);
   await page.goto(`${githubUrl}${githubUser}`);
   await page.screenshot({ path: `${__dirname}/images/${githubUser}.png` });
-  const githubCounter = await page.evaluate(() => document.getElementsByClassName('Counter')[0].innerText);
+  //const githubCounter = await page.evaluate(() => document.getElementsByClassName('Counter')[0].innerText);
   // await page.screenshot({ path: `${__dirname}/images/${getTime()}-${githubUser}.png` });
 
   const githubUserPhoton = await page.evaluate(
