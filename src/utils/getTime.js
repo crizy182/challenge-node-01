@@ -1,3 +1,5 @@
 module.exports = () => {
-  return Math.round(new Date().getTime() * 0.001);
+  return Math.round(
+    new Date().getTime() * 0.001,
+  );
 };
